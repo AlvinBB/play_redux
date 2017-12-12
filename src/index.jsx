@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import './styles/main.scss';
-import RootContainer from './containers/RootContainer.jsx';
+import RootContainer from './containers/RootContainer';
 import configureStore from './redux/configureStore';
 
 // OfflinePluginRuntime.install();

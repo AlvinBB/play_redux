@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createReducer } from 'redux-immutablejs';
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 import {
   EXAMPLE
 } from '../constants';
@@ -17,13 +17,14 @@ import {
 
 
 const initialState = {
-  title: '初始化项目',
+  title: '初始化标题',
 };
 
 const example = (state = initialState, action) => {
   switch (action.type) {
     case EXAMPLE:
       return {
+        ...state,
         title: action.payload.title,
       };
 
@@ -31,8 +32,6 @@ const example = (state = initialState, action) => {
       return state;
   }
 };
-
-// export default router;
 
 const rootReducer = combineReducers({
   example

@@ -1,0 +1,1 @@
+require('./client/src/index.jsx');

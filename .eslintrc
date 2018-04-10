@@ -17,10 +17,10 @@
   "rules": {
     "semi": ["error", "always"],
     "quotes": "off",
-    "no-console": "off",
-    "no-unused-vars": "off",
+    "no-console":"off",
+    "no-unused-vars":"off",
 //    "no-unreachable":"off",
-    "no-redeclare": "warn",
+    "no-redeclare":"warn",
     "no-var": 0,
     "comma-spacing": [1, {
       "before": false,

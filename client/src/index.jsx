@@ -10,9 +10,11 @@ import { Router, broswerHistory } from 'react-router';
 import routes from './routes';
 import '../styles/index.scss';
 
+const store = configureStore(window.__INITIAL_STATE__);
+
 const render = () => {
     let provider = (
-        <Provider store={configureStore()}>
+        <Provider store={store}>
             <Router 
                 history={broswerHistory}
                 routes={routes}

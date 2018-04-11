@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
@@ -8,13 +8,15 @@ module.exports = {
         main: './client.js'
     },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve('dist'),
+        filename: './dist/bundle.js',
+        path: path.resolve(__dirname, '../public'),
         publicPath: '/'
     },
+    //支持import js jsx
     resolve: {
         extensions: ['.js', '.jsx'],
     },
+    //报错map
     devtool: 'inline-source-map',
     module: {
         rules: [
@@ -34,8 +36,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: 'client/public/index.html' }),
-        new webpack.NamedModulesPlugin(),
+        // new HtmlWebpackPlugin({ template: 'client/public/index.html' }),
+        // new webpack.NamedModulesPlugin(),
         // new webpack.HotModuleReplacementPlugin()
         // new CleanWebpackPlugin(['dist'])
     ],

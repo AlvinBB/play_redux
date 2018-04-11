@@ -1,6 +1,8 @@
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 const config = require('./webpack/webpack.development.config');
@@ -13,6 +15,21 @@ import { match, RouterContext } from 'react-router';
 import routes from './client/src/routes';
 
 import configureStore from './client/src/store/configureStore';
+import { renderFullPage } from './configration/template';
+
+
+
+app.set('port', process.env.NODE_PORT || 3000);
+
+//allow application/json
+app.use(bodyParser.json());
+console.log('__dirname', __dirname)
+console.log('path', path.join(__dirname, 'public'))
+//static source file, do not have catch now
+app.use('/static', express.static(path.join(__dirname, 'public'), {
+    "extensions": ["css", "js"],
+    "index": false
+}));
 
 // app.use(webpackDevMiddleware(compiler, {
 //     publicPath: config.output.publicPath,
@@ -20,21 +37,23 @@ import configureStore from './client/src/store/configureStore';
 //     status: { color: true }
 // }));
 
+//send res here
 app.get('*', (req, res) => {
     match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
         if (error) {
-            res.send(500, error.message);
+            res.status(500).send(error.message);
         } else if (redirectLocation) {
-            res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+            res.status(302).redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
             const store = configureStore();
-            res.send(200, renderToString(
+            const preloadState = store.getState();
+            const html = renderToString(
                 <Provider store={store}>
                     <RouterContext {...renderProps} />
-                </Provider>)
-            );
+                </Provider>);
+            res.type('html').send(renderFullPage(html, preloadState));
         } else {
-            res.send(404, 'Not found');
+            res.status(404).send('Not found');
         }
     })
 });
